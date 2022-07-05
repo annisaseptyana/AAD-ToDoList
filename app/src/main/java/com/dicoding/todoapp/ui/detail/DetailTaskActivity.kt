@@ -31,13 +31,16 @@ class DetailTaskActivity : AppCompatActivity() {
 
             task.observe(this@DetailTaskActivity) {
 
-                detailTitle.text = it.title
-                detailDescription.text = it.description
-                detailDueDate.text = DateConverter.convertMillisToString(it.dueDateMillis)
+                if (it != null) {
+                    detailTitle.text = it.title
+                    detailDescription.text = it.description
+                    detailDueDate.text = DateConverter.convertMillisToString(it.dueDateMillis)
 
-                btnDelete.setOnClickListener {
-                    detailTaskViewModel.deleteTask()
-                    finish()
+                    btnDelete.setOnClickListener {
+                        detailTaskViewModel.deleteTask()
+                        Toast.makeText(applicationContext, "The task has been deleted!", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
                 }
             }
         }

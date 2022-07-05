@@ -14,7 +14,7 @@ class DetailTaskViewModel(private val taskRepository: TaskRepository): ViewModel
     }
     val task: LiveData<Task> = _task
 
-    fun setTaskId(taskId: Int?) {
+    fun setTaskId(taskId: Int) {
         if (taskId == _taskId.value) {
             return
         }

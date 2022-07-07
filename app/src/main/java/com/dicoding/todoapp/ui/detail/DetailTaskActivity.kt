@@ -38,7 +38,7 @@ class DetailTaskActivity : AppCompatActivity() {
 
                     btnDelete.setOnClickListener {
                         detailTaskViewModel.deleteTask()
-                        Toast.makeText(applicationContext, "The task has been deleted!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "Task has been deleted", Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }

@@ -27,6 +27,7 @@ class TaskActivity : AppCompatActivity() {
 
     private lateinit var recycler: RecyclerView
     private lateinit var taskViewModel: TaskViewModel
+    private lateinit var adapter: TaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,11 @@ class TaskActivity : AppCompatActivity() {
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.setHasFixedSize(true)
 
+        adapter = TaskAdapter { task, state ->
+            taskViewModel.completeTask(task, state)
+        }
+        recycler.adapter = adapter
+
         initAction()
 
         val factory = ViewModelFactory.getInstance(this)
@@ -55,10 +61,6 @@ class TaskActivity : AppCompatActivity() {
 
     private fun showRecyclerView(task: PagedList<Task>) {
         //TODO 7 : Submit pagedList to adapter and update database when onCheckChange
-        val adapter = TaskAdapter { task, state ->
-            taskViewModel.completeTask(task, state)
-        }
-        recycler.adapter = adapter
         adapter.submitList(task)
     }
 

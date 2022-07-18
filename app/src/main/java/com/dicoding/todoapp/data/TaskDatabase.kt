@@ -29,23 +29,23 @@ abstract class TaskDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: TaskDatabase? = null
 
-        @JvmStatic
         fun getInstance(context: Context): TaskDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TaskDatabase::class.java,
-                    "task.db"
+                    "tasks.db"
                 )
-                    /* .fallbackToDestructiveMigration()
-                    .addCallback(object: Callback() {
+                    .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            Executors.newSingleThreadExecutor().execute {
-                                fillWithStartingData(context, getInstance(context).taskDao())
+                            INSTANCE?.let {
+                                Executors.newSingleThreadExecutor().execute {
+                                    fillWithStartingData(context.applicationContext, it.taskDao())
+                                }
                             }
                         }
-                    }) */
+                    })
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 instance
